@@ -4,49 +4,83 @@
 from collections import defaultdict
 import math
 
+#Helper Functions
+def iterate(f, x, a):
+    # done. do not change me.
+    if len(a) == 0:
+        return x
+    else:
+        return iterate(f, f(x, a[0]), a[1:])
+
+def reduce(f, id_, a):
+    # done. do not change me.
+    if len(a) == 0:
+        return id_
+    elif len(a) == 1:
+        return a[0]
+    else:
+        # can call these in parallel
+        res = f(reduce(f, id_, a[:len(a)//2]),
+                 reduce(f, id_, a[len(a)//2:]))
+        return res
+
 ### PARENTHESES MATCHING
 
 #### Iterative solution
 def parens_match_iterative(mylist):
-    """
-    Implement the iterative solution to the parens matching problem.
-    This function should call `iterate` using the `parens_update` function.
+  """
+  Implement the iterative solution to the parens matching problem.
+  This function should call `iterate` using the `parens_update` function.
+  
+  Params:
+    mylist...a list of strings
+  Returns
+    True if the parenthesis are matched, False otherwise
     
-    Params:
-      mylist...a list of strings
-    Returns
-      True if the parenthesis are matched, False otherwise
-      
-    e.g.,
-    >>>parens_match_iterative(['(', 'a', ')'])
-    True
-    >>>parens_match_iterative(['('])
-    False
-    """
-    ### TODO
-    pass
-
+  e.g.,
+  >>>parens_match_iterative(['(', 'a', ')'])
+  True
+  >>>parens_match_iterative(['('])
+  False
+  """
+  parCount = iterate(parens_update, 0, mylist)
+  if(parCount == 0):
+    return True
+  else:
+    return False
+  
+  
 
 def parens_update(current_output, next_input):
-    """
-    This function will be passed to the `iterate` function to 
-    solve the balanced parenthesis problem.
-    
-    Like all functions used by iterate, it takes in:
-    current_output....the cumulative output thus far (e.g., the running sum when doing addition)
-    next_input........the next value in the input
-    
-    Returns:
-      the updated value of `current_output`
-    """
-    ###TODO
-    pass
+  """
+  This function will be passed to the `iterate` function to 
+  solve the balanced parenthesis problem.
+  
+  Like all functions used by iterate, it takes in:
+  current_output....the cumulative output thus far (e.g., the running sum when doing addition)
+  next_input........the next value in the input
+  
+  Returns:
+    the updated value of `current_output`
+  """
+  ###TODO
+  if(next_input == "("):
+    current_output += 1
+  elif(next_input == ")"):
+    current_output -= 1
+    if(current_output < 0):
+      current_output = -9999
+  return current_output
+      
 
 
 def test_parens_match_iterative():
     assert parens_match_iterative(['(', ')']) == True
     assert parens_match_iterative(['(']) == False
     assert parens_match_iterative([')']) == False
+    assert parens_match_iterative(['(', '(', 'a', ')', 'b', ')']) == True
+    assert parens_match_iterative(['(', '(', 'a', ')']) == False
+
 
 
 #### Scan solution
