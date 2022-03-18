@@ -86,24 +86,27 @@ def test_parens_match_iterative():
 #### Scan solution
 
 def parens_match_scan(mylist):
-    """
-    Implement a solution to the parens matching problem using `scan`.
-    This function should make one call each to `scan`, `map`, and `reduce`
+  """
+  Implement a solution to the parens matching problem using `scan`.
+  This function should make one call each to `scan`, `map`, and `reduce`
+  
+  Params:
+    mylist...a list of strings
+  Returns
+    True if the parenthesis are matched, False otherwise
     
-    Params:
-      mylist...a list of strings
-    Returns
-      True if the parenthesis are matched, False otherwise
-      
-    e.g.,
-    >>>parens_match_scan(['(', 'a', ')'])
-    True
-    >>>parens_match_scan(['('])
-    False
-    
-    """
-    ###TODO
-    pass
+  e.g.,
+  >>>parens_match_scan(['(', 'a', ')'])
+  True
+  >>>parens_match_scan(['('])
+  False
+  
+  """
+  ###TODO
+  outputTuple = scan(paren_map, , mylist)
+  if(outputTuple[1] == 0):
+    return True
+  return False
 
 def scan(f, id_, a):
     """
