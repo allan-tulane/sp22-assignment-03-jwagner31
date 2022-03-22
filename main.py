@@ -24,6 +24,8 @@ def reduce(f, id_, a):
                  reduce(f, id_, a[len(a)//2:]))
         return res
 
+def plus(x, y):
+  return x+y
 ### PARENTHESES MATCHING
 
 #### Iterative solution
@@ -103,11 +105,15 @@ def parens_match_scan(mylist):
   
   """
   ###TODO
-  outputTuple = scan(paren_map, , mylist)
-  if(outputTuple[1] == 0):
-    return True
+  newlist = []
+  for element in mylist:
+    newlist.append(paren_map(element))
+  outputTuple = scan(plus, 0, newlist)
+  min = reduce(min_f, 0, outputTuple[0])
+  if(outputTuple[1] == 0 and min >= 0):
+    return True 
   return False
-
+    
 def scan(f, id_, a):
     """
     This is a horribly inefficient implementation of scan
@@ -154,6 +160,9 @@ def test_parens_match_scan():
     assert parens_match_scan(['(', ')']) == True
     assert parens_match_scan(['(']) == False
     assert parens_match_scan([')']) == False
+    assert parens_match_scan(['(', '(', 'a', ')', 'b', ')']) == True
+    assert parens_match_scan(['(', '(', 'a', ')']) == False
+
 
 #### Divide and conquer solution
 
@@ -170,19 +179,34 @@ def parens_match_dc(mylist):
     return n_unmatched_left==0 and n_unmatched_right==0
 
 def parens_match_dc_helper(mylist):
-    """
-    Recursive, divide and conquer solution to the parens match problem.
-    
-    Returns:
-      tuple (R, L), where R is the number of unmatched right parentheses, and
-      L is the number of unmatched left parentheses. This output is used by 
-      parens_match_dc to return the final True or False value
-    """
-    ###TODO
-    pass
+  """
+  Recursive, divide and conquer solution to the parens match problem.
+  
+  Returns:
+    tuple (R, L), where R is the number of unmatched right parentheses, and
+    L is the number of unmatched left parentheses. This output is used by 
+    parens_match_dc to return the final True or False value
+  """
+  ###TODO
+  if(len(mylist) == 1):
+    if(mylist[0] == '('):
+      return (0,1)
+    elif(mylist[0] == ')'):
+      return (1,0)
+  else:
+    #lefttuple = (i, j)
+    lefttuple = parens_match_dc_helper(mylist[:len(mylist)//2])
+    #righttuple = (k, l)
+    righttuple = parens_match_dc_helper(mylist[len(mylist)//2:])
+    if(righttuple[0] <= lefttuple[1]):
+      return (lefttuple[0], lefttuple[1] - righttuple[0] + righttuple[1])
+    else:
+      return (lefttuple[0] - lefttuple[1] + righttuple[0], righttuple[1])
     
 
 def test_parens_match_dc():
     assert parens_match_dc(['(', ')']) == True
     assert parens_match_dc(['(']) == False
     assert parens_match_dc([')']) == False
+    assert parens_match_scan(['(', '(', 'a', ')', 'b', ')']) == True
+    assert parens_match_scan(['(', '(', 'a', ')']) == False
