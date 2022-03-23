@@ -18,7 +18,8 @@ Place all written answers from `assignment-03.md` here for easier grading.
 
 
 - **d.**
-  - W(n) = 2W(n/2)+
+  - W(n) = n+O(n)+O(n)+1
+  - S(n) = n+O(logn)+O(logn)+1
 
 
 
