@@ -32,8 +32,7 @@ Below, we'll solve this problem three different ways, using iterate, scan, and d
 
 **b. (8pts)** What are the recurrences for the Work and Span of this solution? What are their Big Oh solutions?
 
-**enter answer in `answers.md`**
-
+Work Recurrence: 
 .  
 . 
 
